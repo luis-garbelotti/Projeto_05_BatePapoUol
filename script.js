@@ -1,9 +1,10 @@
 let usuario = {};
+let nomeUsuario;
 
 
 function entrarNaSala() {
 
-    let nomeUsuario = prompt("Qual seu lindo nome?");
+    nomeUsuario = prompt("Qual seu lindo nome?");
 
     usuario = {
                 name: nomeUsuario 
@@ -55,7 +56,7 @@ function enviarRequsicaoDeMensagens (response) {
 function carregarMensagens(resposta) {
 
     imprimirMensagens(resposta.data);
-
+    // console.log(resposta.data);
 }
 
 
@@ -108,34 +109,74 @@ function imprimirMensagens(todasMensagens) {
         } 
         
         if(todasMensagens[i].type === 'private_message') {
-            if (i === todasMensagens.length - 1) {
-                ulMensagem.innerHTML += `<li class="mensagem mensagemPrivada ultimaMensagem">
-                                                <span class="horario"> (${todasMensagens[i].time}) </span> 
-                                                <span> <strong> ${todasMensagens[i].from} </strong> </span> 
-                                                <span> para </span>
-                                                <span> <strong>${todasMensagens[i].to} </strong> </span>
-                                                <span> ${todasMensagens[i].text} </span>
-                                            </li>
-                                            `;
-            } else {
-                ulMensagem.innerHTML += `<li class="mensagem mensagemPrivada">
-                                                <span class="horario"> (${todasMensagens[i].time}) </span> 
-                                                <span> <strong> ${todasMensagens[i].from} </strong> </span> 
-                                                <span> para </span>
-                                                <span> <strong>${todasMensagens[i].to} </strong> </span>
-                                                <span> ${todasMensagens[i].text} </span>
-                                            </li>
-                                            `;
+
+            if (todasMensagens[i].from === nomeUsuario) {
+                if (i === todasMensagens.length - 1) {
+                    ulMensagem.innerHTML += `<li class="mensagem mensagemPrivada ultimaMensagem">
+                                                    <span class="horario"> (${todasMensagens[i].time}) </span> 
+                                                    <span> <strong> ${todasMensagens[i].from} </strong> </span> 
+                                                    <span> para </span>
+                                                    <span> <strong>${todasMensagens[i].to} </strong> </span>
+                                                    <span> ${todasMensagens[i].text} </span>
+                                                </li>
+                                                `;
+                } else {
+                    ulMensagem.innerHTML += `<li class="mensagem mensagemPrivada">
+                                                    <span class="horario"> (${todasMensagens[i].time}) </span> 
+                                                    <span> <strong> ${todasMensagens[i].from} </strong> </span> 
+                                                    <span> para </span>
+                                                    <span> <strong>${todasMensagens[i].to} </strong> </span>
+                                                    <span> ${todasMensagens[i].text} </span>
+                                                </li>
+                                                `;
+                }
+        } else {
+            ulMensagem.innerHTML += `<li class="mensagem mensagemPrivada escondePrivado">
+                                                    <span class="horario"> (${todasMensagens[i].time}) </span> 
+                                                    <span> <strong> ${todasMensagens[i].from} </strong> </span> 
+                                                    <span> para </span>
+                                                    <span> <strong>${todasMensagens[i].to} </strong> </span>
+                                                    <span> ${todasMensagens[i].text} </span>
+                                                </li>
+                                                `;
+
             }
         }
+    
     }
-
-
-const irParaUltimaMensagem = document.querySelector(".ultimaMensagem");
-irParaUltimaMensagem.scrollIntoView();
+    const irParaUltimaMensagem = document.querySelector(".ultimaMensagem");
+    irParaUltimaMensagem.scrollIntoView();
 
 }
 
 
+let novaMensagem;
 
-                                    
+
+function enviarMensagem() {
+
+    const textoDaMensagem = document.querySelector(".mensagemDigitada");
+    let texto = textoDaMensagem.value;
+
+    const mensagemEnviada = {
+                                from: nomeUsuario,
+                                to: "Todos",
+                                text: texto,
+                                type: "message"
+                            }
+
+    let promessaEnvioMensagem = axios.post("https://mock-api.driven.com.br/api/v4/uol/messages", mensagemEnviada);
+    promessaEnvioMensagem.then(enviarRequsicaoDeMensagens);
+    promessaEnvioMensagem.catch(erroAoEnviar);
+    textoDaMensagem.value = "";
+
+}
+
+
+function erroAoEnviar () {
+
+    alert("O usuário não foi encontrado. Tente novamente.");
+    window.location.reload();
+
+}
+

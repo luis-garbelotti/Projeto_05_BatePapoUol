@@ -1,9 +1,12 @@
 * {
+
     box-sizing: border-box;
     font-family: 'Roboto';
+
 }
 
 .estilo-menu {
+
     background-color: #ffffff;
 
     width: 375px;
@@ -14,9 +17,11 @@
     align-items: center;
     
     z-index: 1;
+
 }
 
 .menu-topo  {
+
     padding: 0 22px;
 
     position: fixed;
@@ -24,18 +29,24 @@
     left: 0;
 
     box-shadow: 0 5px 5px lightgrey;
+
 }
 
 .menu-topo img  {
+
     width: 75px;
+
 }
 
 ion-icon {
+
     width: 48px;
     height: 40px;
+
 }
 
 .historicoDeMensagens {
+
     padding-top: 100px;
     padding-bottom: 80px;
     width: 375px;
@@ -43,9 +54,13 @@ ion-icon {
     background-color: #E5E5E5;
 
     overflow-y: scroll;
+
+    overflow-wrap: break-word;
+
 }
 
 .historicoDeMensagens li {
+
     width: 100%;
     height: auto;
     padding: 10px;
@@ -54,34 +69,48 @@ ion-icon {
     font-size: 14px;
 
     border-radius: 2px;
+
 }
 
 
 .mensagemStatus {
+
     background-color: #DCDCDC;
+
 }
 
 .mensagemNormal {
+
     background-color: #ffffff;
+
 }
 
 .mensagemPrivada {
+
     background-color: #FFDEDE;
+
 }
 
 .horario {
+
     color: rgb(155, 155, 155);
+
 }
 
 span {
+
     line-height: 21px;
+
 }
 
 strong {
+
     font-weight: 700;
+
 }
 
 .menu-footer {
+
     padding-right: 18px;
     padding-left: 15px;
 
@@ -90,9 +119,11 @@ strong {
     left: 0;
 
     box-shadow: 0 -5px 5px lightgrey;
+
 }
 
 input {
+
     width: 90%;
     height: 80%;
 
@@ -105,4 +136,17 @@ input {
     text-align: left;
 
     border: none;
+
+}
+
+ion-icon:hover {
+
+    cursor: pointer;
+
+}
+
+.escondePrivado {
+
+    display: none;
+    
 }
