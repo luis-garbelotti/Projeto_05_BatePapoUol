@@ -56,7 +56,7 @@ function enviarRequsicaoDeMensagens (response) {
 function carregarMensagens(resposta) {
 
     imprimirMensagens(resposta.data);
-    // console.log(resposta.data);
+
 }
 
 
@@ -69,7 +69,7 @@ function imprimirMensagens(todasMensagens) {
 
         if( todasMensagens[i].type === 'status') {
             if (i === todasMensagens.length - 1) {
-                ulMensagem.innerHTML += `<li class="mensagem mensagemStatus ultimaMensagem">
+                ulMensagem.innerHTML += `<li class="mensagem mensagemStatus ultimaMensagem" data-identifier="message">
                                                 <span class="horario">  (${todasMensagens[i].time})   </span> 
                                                 <span> <strong>  ${todasMensagens[i].from}  </strong> </span> 
                                                 <span> ${todasMensagens[i].text} </span> 
@@ -77,7 +77,7 @@ function imprimirMensagens(todasMensagens) {
                                             `;
 
             } else {
-                ulMensagem.innerHTML += `<li class="mensagem mensagemStatus">
+                ulMensagem.innerHTML += `<li class="mensagem mensagemStatus" data-identifier="message">
                                                 <span class="horario">  (${todasMensagens[i].time})   </span> 
                                                 <span> <strong>  ${todasMensagens[i].from}  </strong> </span> 
                                                 <span> ${todasMensagens[i].text} </span> 
@@ -88,7 +88,7 @@ function imprimirMensagens(todasMensagens) {
         
         if (todasMensagens[i].type === 'message') {
             if (i === todasMensagens.length - 1) {
-                ulMensagem.innerHTML += `<li class="mensagem mensagemNormal ultimaMensagem">
+                ulMensagem.innerHTML += `<li class="mensagem mensagemNormal ultimaMensagem" data-identifier="message">
                                                 <span class="horario"> (${todasMensagens[i].time}) </span> 
                                                 <span> <strong> ${todasMensagens[i].from} </strong> </span> 
                                                 <span> para </span>
@@ -97,7 +97,7 @@ function imprimirMensagens(todasMensagens) {
                                             </li>
                                             `;
             } else {
-                ulMensagem.innerHTML += `<li class="mensagem mensagemNormal ">
+                ulMensagem.innerHTML += `<li class="mensagem mensagemNormal" data-identifier="message">
                                                 <span class="horario"> (${todasMensagens[i].time}) </span> 
                                                 <span> <strong> ${todasMensagens[i].from} </strong> </span> 
                                                 <span> para </span>
@@ -112,7 +112,7 @@ function imprimirMensagens(todasMensagens) {
 
             if (todasMensagens[i].from === nomeUsuario) {
                 if (i === todasMensagens.length - 1) {
-                    ulMensagem.innerHTML += `<li class="mensagem mensagemPrivada ultimaMensagem">
+                    ulMensagem.innerHTML += `<li class="mensagem mensagemPrivada ultimaMensagem" data-identifier="message">
                                                     <span class="horario"> (${todasMensagens[i].time}) </span> 
                                                     <span> <strong> ${todasMensagens[i].from} </strong> </span> 
                                                     <span> para </span>
@@ -121,7 +121,7 @@ function imprimirMensagens(todasMensagens) {
                                                 </li>
                                                 `;
                 } else {
-                    ulMensagem.innerHTML += `<li class="mensagem mensagemPrivada">
+                    ulMensagem.innerHTML += `<li class="mensagem mensagemPrivada" data-identifier="message">
                                                     <span class="horario"> (${todasMensagens[i].time}) </span> 
                                                     <span> <strong> ${todasMensagens[i].from} </strong> </span> 
                                                     <span> para </span>
@@ -130,20 +130,19 @@ function imprimirMensagens(todasMensagens) {
                                                 </li>
                                                 `;
                 }
-        } else {
-            ulMensagem.innerHTML += `<li class="mensagem mensagemPrivada escondePrivado">
-                                                    <span class="horario"> (${todasMensagens[i].time}) </span> 
-                                                    <span> <strong> ${todasMensagens[i].from} </strong> </span> 
-                                                    <span> para </span>
-                                                    <span> <strong>${todasMensagens[i].to} </strong> </span>
-                                                    <span> ${todasMensagens[i].text} </span>
-                                                </li>
-                                                `;
-
+            } else {
+                ulMensagem.innerHTML += `<li class="mensagem mensagemPrivada escondido" data-identifier="message">
+                                                <span class="horario"> (${todasMensagens[i].time}) </span> 
+                                                <span> <strong> ${todasMensagens[i].from} </strong> </span> 
+                                                <span> para </span>
+                                                <span> <strong>${todasMensagens[i].to} </strong> </span>
+                                                <span> ${todasMensagens[i].text} </span>
+                                            </li>
+                                            `;
             }
         }
-    
     }
+
     const irParaUltimaMensagem = document.querySelector(".ultimaMensagem");
     irParaUltimaMensagem.scrollIntoView();
 
@@ -180,3 +179,11 @@ function erroAoEnviar () {
 
 }
 
+
+const envioEnter = document.addEventListener("keypress", function(e) {
+
+    if (e.key === 'Enter') {
+        enviarMensagem();         
+    }
+
+});

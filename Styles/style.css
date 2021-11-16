@@ -53,7 +53,7 @@ ion-icon {
     height: auto;
     background-color: #E5E5E5;
 
-    overflow-y: scroll;
+    overflow: hidden;
 
     overflow-wrap: break-word;
 
@@ -122,7 +122,7 @@ strong {
 
 }
 
-input {
+.menu-footer input {
 
     width: 90%;
     height: 80%;
@@ -145,8 +145,12 @@ ion-icon:hover {
 
 }
 
-.escondePrivado {
+.escondido {
 
     display: none;
     
 }
+
+
+
+
